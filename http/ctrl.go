@@ -48,12 +48,64 @@ func RegisterCertificate(ctx *gin.Context) {
 	var txId string
 	txId, _, err = service.DefaultFaceIDService.RegisterCertificate(&req)
 	if err != nil {
-		logger.Errorf("client %s request register faceid error: %v", ctx.ClientIP(), err)
+		logger.Errorf("client %s request register certificate error: %v", ctx.ClientIP(), err)
 		ctx.JSON(http.StatusOK, model.NewInternalServerErrorJsonResponse(err))
 		return
 	}
 
 	ctx.JSON(http.StatusOK, model.NewSuccessfulJsonResponse(txId))
+}
+
+func Record(ctx *gin.Context) {
+	var req model.RequestRecord
+
+	err := bindBody(ctx, &req)
+	if err != nil {
+		logger.Errorf("client %s request parameters error:%v", ctx.ClientIP(), err)
+		ctx.String(http.StatusBadRequest, RequestParametersError)
+		return
+	}
+
+	var txId string
+	txId, _, err = service.DefaultFaceIDService.Record(&req)
+	if err != nil {
+		logger.Errorf("client %s request record error: %v", ctx.ClientIP(), err)
+		ctx.JSON(http.StatusOK, model.NewInternalServerErrorJsonResponse(err))
+		return
+	}
+
+	ctx.JSON(http.StatusOK, model.NewSuccessfulJsonResponse(txId))
+}
+
+func GetUser(ctx *gin.Context) {
+	var req model.RequestGetUser
+
+	err := bindBody(ctx, &req)
+	if err != nil {
+		logger.Errorf("client %s request parameters error:%v", ctx.ClientIP(), err)
+		ctx.String(http.StatusBadRequest, RequestParametersError)
+		return
+	}
+
+	var txIdData string
+	txIdData, err = service.DefaultFaceIDService.GetUser(&req)
+	if err != nil {
+		logger.Errorf("client %s request get user error: %v", ctx.ClientIP(), err)
+		ctx.JSON(http.StatusOK, model.NewInternalServerErrorJsonResponse(err))
+		return
+	}
+
+	var r interface{}
+	err2 := json.Unmarshal([]byte(txIdData), &r)
+	if err2 != nil {
+		logger.Errorf("client %s request get user json error: %v", ctx.ClientIP(), err2)
+		ctx.JSON(http.StatusOK, model.NewInternalServerErrorJsonResponse(err2))
+		return
+	} else {
+		//fmt.Println(r)
+		ctx.JSON(http.StatusOK, model.NewSuccessfulJsonResponse(r))
+		return
+	}
 }
 
 func HistoryFaceIDs(ctx *gin.Context) {
@@ -69,7 +121,7 @@ func HistoryFaceIDs(ctx *gin.Context) {
 	var txIdData string
 	txIdData, err = service.DefaultFaceIDService.HistoryFaceIDs(&req)
 	if err != nil {
-		logger.Errorf("client %s request history faceid error: %v", ctx.ClientIP(), err)
+		logger.Errorf("client %s request history faceids error: %v", ctx.ClientIP(), err)
 		ctx.JSON(http.StatusOK, model.NewInternalServerErrorJsonResponse(err))
 		return
 	}
@@ -77,7 +129,7 @@ func HistoryFaceIDs(ctx *gin.Context) {
 	var r interface{}
 	err2 := json.Unmarshal([]byte(txIdData), &r)
 	if err2 != nil {
-		logger.Errorf("client %s request history faceid json error: %v", ctx.ClientIP(), err2)
+		logger.Errorf("client %s request history faceids json error: %v", ctx.ClientIP(), err2)
 		ctx.JSON(http.StatusOK, model.NewInternalServerErrorJsonResponse(err2))
 		return
 	} else {
