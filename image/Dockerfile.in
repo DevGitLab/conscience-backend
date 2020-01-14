@@ -1,0 +1,6 @@
+FROM alpine:latest
+WORKDIR /root/
+COPY config-test.yaml .
+COPY config-prod.yaml .
+COPY .build/app .
+CMD ["./app"]

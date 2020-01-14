@@ -1,0 +1,19 @@
+server:
+  addr: 0.0.0.0:8080
+
+user-center:
+  private-url: http://default-user-center:8090
+  public-url: http://default-user-center:8080
+
+blockchain-api:
+  url: http://default-blockchain-api:8080
+
+db:
+  redis:
+    uri: 127.0.0.1:6379
+    password: UAT1VOzR7C
+    db: 0
+  mysql:
+    dsn: root:7QZKO020y1@tcp(localhost:3306)/conscience_backend?parseTime=true&charset=utf8mb4&loc=Hongkong
+  mongo:
+    uri: mongodb://root:cMP3LuSKKk@mongo-mongodb:27017/admin?authSource=admin

@@ -1,0 +1,17 @@
+server:
+  addr: 0.0.0.0:8080
+
+user-center:
+  private-url: http://kbcs-user-center.kbcs:8090
+  public-url: http://kbcs-user-center.kbcs:8080
+
+db:
+  redis:
+    uri: 127.0.0.1:6379
+    password: UAT1VOzR7C
+    db: 0
+  mysql:
+    dsn: root:pPEgcZWi8q@tcp(localhost:3306)/blockchain-explorer?parseTime=true&charset=utf8mb4&loc=Hongkong
+  mongo:
+    uri: mongodb://kbcs-formal:NBm2Hg2kLIQUi9lb@10.244.4.188:27017/kedas?authSource=admin
+    db:

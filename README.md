@@ -1,2 +1,32 @@
-# conscience-backend
-conscience-backend
+# 文档
+
+## 说明
+
+### 数据格式
+
+如果不特殊说明，请求参数格式为：application/json
+
+接口正常情况下返回json格式的数据，格式如下：
+
+```json
+{
+    "errcode": 0,
+    "description": "查询成功",
+    "data": [{
+        //some data...JSONArray格式
+    }]
+}
+```
+
+### 通用错误码
+
+通用错误码为int型
+
+| 错误码 | 说明     |
+| :----- | :------- |
+| 0      | 操作成功 |
+| 500    | 内部错误 |
+
+### 通用数据类型
+
+
